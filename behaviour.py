@@ -20,7 +20,7 @@ def alignment():
 	for rock in rock_group:
 		steer1 = np.zeros(DIMENSIONS)
 		steer1 = (center_of_vel() - rock.vel)*alignmentWeight
-		rock.vel = steer1
+		rock.vel = rock.vel + steer1
 		rock.pos = rock.pos + rock.vel
 
 
@@ -28,7 +28,7 @@ def cohesion():
 	for rock in rock_group:
 		steer2 = np.zeros(DIMENSIONS)
 		steer2 = (center_of_pos() - rock.get_pos())*centerOfMassWeight
-		rock.vel = steer2
+		rock.vel = rock.vel + steer2
 		rock.pos = rock.pos + rock.vel
 
 def separation():
@@ -40,7 +40,7 @@ def separation():
 			distance = np.linalg.norm(difference)
 			if distance < separationDistance and rock2 != rock:
 				steer3 = steer3 - difference/distance
-		rock.vel = steer3*separationWeight
+		rock.vel = rock.vel + steer3*separationWeight
 		rock.pos = rock.pos + rock.vel
 
 def avoid_ship():
@@ -50,7 +50,7 @@ def avoid_ship():
 		distance = np.linalg.norm(difference)
 		if distance < avoidDistance:
 			steer4 = (steer4 - difference)*avoidWeight
-		rock.vel = steer4
+		rock.vel = rock.vel + steer4
 		rock.pos = rock.pos + rock.vel 
 
 def attack_ship():
@@ -60,5 +60,5 @@ def attack_ship():
 		distance = np.linalg.norm(difference)
 		if distance < attackDistance:
 			steer5 = (steer5 - difference)*attackWeight
-		rock.vel = steer5
+		rock.vel = rock.vel + steer5
 		rock.pos = rock.pos + rock.vel 
